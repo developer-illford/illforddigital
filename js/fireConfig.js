@@ -1,15 +1,11 @@
 var firebaseConfig = {
-    apiKey: "AIzaSyAw1iaOwMTxgmlz4MV7CYa59Ma89y2fg8E",
-    authDomain: "illfordadmin.firebaseapp.com",
-    databaseURL: "https://illfordadmin-default-rtdb.firebaseio.com",
-    projectId: "illfordadmin",
-    storageBucket: "illfordadmin.appspot.com",
-    messagingSenderId: "569304509474",
-    appId: "1:569304509474:web:6e934d68c9a731389bee7b"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
-
-
-  
+  apiKey: "AIzaSyB4z6iEbx_u5mAVCUOSWXtcc7hFGFaYFi4",
+  authDomain: "illfordadmin-74b42.firebaseapp.com",
+  databaseURL: "https://illfordadmin-74b42-default-rtdb.firebaseio.com",
+  projectId: "illfordadmin-74b42",
+  storageBucket: "illfordadmin-74b42.appspot.com",
+  messagingSenderId: "995811077928",
+  appId: "1:995811077928:web:0836d4d7ae078c3d586a1d"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);

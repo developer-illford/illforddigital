@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAX TOOLS</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="shortcut icon" href="https://illforddigital.com/favicon.png" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .custom-file-upload {
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-file-upload:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        @media screen and (min-width: 768px) {
+
+            .container th,
+            td {
+                width: 30%;
+            }
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .download-all {
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .download-all a {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-all a:hover {
+            background-color: #0056b3;
+        }
+
+        #conversionSuccessMessage {
+            display: none;
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>WEBP Converter</h1>
+        <h5>Convert your .jpg/.jpeg/.png files to .webp format along with an optimized compression</h5>
+        <label for="fileInput" class="custom-file-upload">Choose files</label>
+        <input type="file" accept="image/jpeg, image/png" id="fileInput" multiple>
+        <br>
+        <br>
+        <div class="download-all" id="downloadAllBtnWrapper">
+            <a href="#" id="downloadAllBtn" download="converted_images.zip">Download All as Zip &nbsp;<i
+                    class="bi bi-download"></i></a>
+        </div>
+        <p id="conversionSuccessMessage">Converted successfully</p>
+        <table id="output">
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>Thumbnail</th>
+                    <th>Download .webp file</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', async function (event) {
+            const files = event.target.files;
+            const outputTable = document.getElementById('output').getElementsByTagName('tbody')[0];
+            outputTable.innerHTML = ''; // Clear previous output
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const imageBitmap = await createImageBitmap(file);
+                const canvas = document.createElement('canvas');
+                canvas.width = imageBitmap.width;
+                canvas.height = imageBitmap.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(imageBitmap, 0, 0);
+                canvas.toBlob(async function (blob) {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `${file.name.split('.')[0]}.webp`;
+                    link.innerHTML = `<i class="bi bi-download"></i>`; // Bootstrap icon for download
+                    const outputRow = outputTable.insertRow();
+                    outputRow.insertCell(0).textContent = file.name;
+                    const thumbnailCell = outputRow.insertCell(1);
+                    const thumbnailImg = document.createElement('img');
+                    thumbnailImg.src = url;
+                    thumbnailCell.appendChild(thumbnailImg);
+                    const downloadCell = outputRow.insertCell(2);
+                    downloadCell.appendChild(link);
+
+                    // Show the "Download All as Zip" button
+                    document.getElementById('downloadAllBtnWrapper').style.display = 'block';
+                }, 'image/webp');
+            }
+
+            // Show conversion success message
+            document.getElementById('conversionSuccessMessage').style.display = 'block';
+
+            // Update download all button link
+            const downloadAllBtn = document.getElementById('downloadAllBtn');
+            downloadAllBtn.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent default behavior of anchor tag
+                const zip = new JSZip();
+                const promises = [];
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    promises.push(new Promise(async (resolve, reject) => {
+                        const imageBitmap = await createImageBitmap(file);
+                        const canvas = document.createElement('canvas');
+                        canvas.width = imageBitmap.width;
+                        canvas.height = imageBitmap.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(imageBitmap, 0, 0);
+                        canvas.toBlob(function (blob) {
+                            const filename = file.name.split('.')[0] + '.webp';
+                            zip.file(filename, blob);
+                            resolve();
+                        }, 'image/webp');
+                    }));
+                }
+                Promise.all(promises).then(() => {
+                    zip.generateAsync({ type: 'blob' }).then(function (content) {
+                        saveAs(content, 'converted_images.zip');
+                    });
+                });
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <h5 style="position: absolute; bottom: 0;">developed by: <a target="_blank" href="https://www.instagram.com/web.developer.manas?igsh=MXEyc3pwcmFtaTkxcA==">Manas Tom</a></h5>
+    
+
+</body>
+
+</html>

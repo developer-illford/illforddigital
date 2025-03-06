@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Content Extractor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+        .container h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .input-container input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .input-container button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .input-container button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .download-btn {
+            margin-top: 20px;
+            background-color: #007bff;
+        }
+        .download-btn:disabled {
+            background-color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Web Content Extractor</h1>
+        <div class="input-container">
+            <input type="url" id="urlInput" placeholder="Enter webpage URL" />
+            <button id="extractButton">Extract Content</button>
+            <button id="downloadButton" class="download-btn" disabled>Download Excel</button>
+        </div>
+    </div>
+
+    <script>
+       extractButton.addEventListener('click', async () => {
+    const url = urlInput.value.trim();
+    if (!url) {
+        alert('Please enter a valid URL.');
+        return;
+    }
+
+    extractButton.textContent = 'Extracting...';
+    extractButton.disabled = true;
+
+    try {
+        const formData = new FormData();
+        formData.append('url', url);
+
+        const response = await fetch('extract.php', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const textResponse = await response.text();
+        let data;
+
+        try {
+            data = JSON.parse(textResponse);
+        } catch (error) {
+            throw new Error('Invalid JSON response from the server.');
+        }
+
+        if (data.success) {
+            downloadUrl = data.fileUrl;
+            downloadButton.disabled = false;
+            alert('Content extracted successfully! Click "Download Excel" to download.');
+        } else {
+            throw new Error(data.error || 'Failed to extract content.');
+        }
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        extractButton.textContent = 'Extract Content';
+        extractButton.disabled = false;
+    }
+});
+
+    </script>
+</body>
+</html>

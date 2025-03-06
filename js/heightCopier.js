@@ -22,3 +22,12 @@ const fifthDivb = document.querySelector('.services_page_section5_colItem5');
 const sixthDivb = document.querySelector('.services_page_section5_colItem6');
 fourthDivb.style.height = `${sixthDivb.clientHeight}px`;
 fifthDivb.style.height = `${sixthDivb.clientHeight}px`;
+
+
+
+
+const ShowCard1 = document.querySelector('.ShowCard1');
+const ShowCard2 = document.querySelector('.ShowCard2');
+const ShowCard3 = document.querySelector('.ShowCard3');
+ShowCard2.style.height = `${ShowCard1.clientHeight}px`;
+ShowCard3.style.height = `${ShowCard1.clientHeight}px`;

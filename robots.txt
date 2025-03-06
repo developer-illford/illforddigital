@@ -1,2 +1,10 @@
 User-agent: *
-Disallow: /
+
+Disallow: /blog/
+Disallow: /cgi-bin/
+
+Disallow: /stories/wp-admin/
+Disallow: /admin-login
+
+
+Sitemap: https://illforddigital.com/sitemap.xml

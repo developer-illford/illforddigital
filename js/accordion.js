@@ -28,3 +28,4 @@ function closeAllPanels() {
     accordionButtons[j].classList.remove("active");
   }
 }
+

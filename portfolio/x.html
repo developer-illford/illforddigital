@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Horizontal parallax sliding slider with Swiper.js</title>
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"> -->
+
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css'>
+    <style>
+        .home_slider [class^="swiper-button-"] {
+            transition: all 0.3s ease;
+        }
+
+        .home_slider .swiper-slide {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .home_slider *,
+        .home_slider *:before,
+        .home_slider *:after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .home_slider .swiper-container {
+            width: 80%;
+            height: 100vh;
+            float: left;
+            transition: opacity 0.6s ease, transform 0.3s ease;
+        }
+
+        .home_slider .swiper-container.nav-slider {
+            width: 20%;
+            padding-left: 5px;
+        }
+
+        .home_slider .swiper-container.nav-slider .swiper-slide {
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+        }
+
+        .home_slider .swiper-container.nav-slider .swiper-slide.swiper-slide-active {
+            opacity: 1;
+        }
+
+        .home_slider .swiper-container.nav-slider .swiper-slide .content {
+            width: 100%;
+        }
+
+        .home_slider .swiper-container.nav-slider .swiper-slide .content .title {
+            font-size: 20px;
+        }
+
+        .home_slider .swiper-container:hover .swiper-button-prev,
+        .home_slider .swiper-container:hover .swiper-button-next {
+            transform: translateX(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .home_slider .swiper-container.loading {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .home_slider .swiper-slide {
+            overflow: hidden;
+        }
+
+        .home_slider .swiper-slide .slide-bgimg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .home_slider .swiper-slide .entity-img {
+            display: none;
+        }
+
+        .home_slider .swiper-slide .content {
+            position: absolute;
+            top: 40%;
+            left: 0;
+            width: 50%;
+            padding-left: 5%;
+            color: #fff;
+        }
+
+        .home_slider .swiper-slide .content .title {
+            font-size: 2.6em;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .home_slider .swiper-slide .content .caption {
+            display: block;
+            font-size: 13px;
+            line-height: 1.4;
+            transform: translateX(50px);
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.7s ease;
+        }
+
+        .home_slider .swiper-slide .content .caption.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .home_slider [class^="swiper-button-"] {
+            width: 44px;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .home_slider .swiper-button-prev {
+            transform: translateX(50px);
+        }
+
+        .home_slider .swiper-button-next {
+            transform: translateX(-50px);
+        }
+    </style>
+
+</head>
+
+<body>
+    <section class="home_slider">
+        <div class="swiper-container main-slider loading">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <figure class="slide-bgimg"
+                        style="background-image:url(https://tleit.by/templates/tleit/images/sliders/3.jpg)">
+                        <img src="https://tleit.by/templates/tleit/images/sliders/3.jpg" class="entity-img" />
+                    </figure>
+                    <div class="content">
+                        <p class="title">Полный цикл изготовления валов, а также обрезинивание и шлифование валов и
+                            роликов
+                        </p>
+                        <span class="caption">Lorem Ipsum has been the industry's standard dummy text ever since the
+                            1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen
+                            book.</span>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <figure class="slide-bgimg" style="background-image:url(http://tleit.by/uploads/posts/shtamp1.jpg)">
+                        <img src="http://tleit.by/uploads/shtamp1.jpg" class="entity-img" />
+                    </figure>
+                    <div class="content">
+                        <p class="title">Штампы декоративные для наружных и внутренних работ имитация «Горный сланец»
+                        </p>
+                        <span class="caption">Lorem Ipsum has been the industry's standard dummy text ever since the
+                            1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen
+                            book.</span>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <figure class="slide-bgimg"
+                        style="background-image:url(http://tleit.by/uploads/posts/2019-04/1554796860_sertifikaty1.jpg)">
+                        <img src="http://tleit.by/uploads/posts/2019-04/1554796860_sertifikaty1.jpg"
+                            class="entity-img" />
+                    </figure>
+                    <div class="content">
+                        <p class="title">Наши сертификаты</p>
+                        <span class="caption">Lorem Ipsum has been the industry's standard dummy text ever since the
+                            1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen
+                            book.</span>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <figure class="slide-bgimg" style="background-image:url(http://tleit.by/uploads/kovrikigif.gif)">
+                        <img src="http://tleit.by/uploads/kovrikigif.gif" class="entity-img" />
+                    </figure>
+                    <div class="content">
+                        <p class="title">Коврики и плиты</p>
+                        <span class="caption">Lorem Ipsum has been the industrys standard dummy text ever since the
+                            1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen
+                            book.</span>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <figure class="slide-bgimg"
+                        style="background-image:url(https://drive.google.com/uc?export=view&id=0B_koKn2rKOkLNXBIcEdOUFVIWmM)">
+                        <img src="http://tleit.by/uploads/shtamp5_2.jpg" class="entity-img" />
+                    </figure>
+                    <div class="content">
+                        <p class="title">Bernadette Newman</p>
+                        <span class="caption">Lorem Ipsum has been the industrys standard dummy text ever since the
+                            1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen
+                            book.</span>
+                    </div>
+                </div>
+            </div>
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev swiper-button-white"></div>
+            <div class="swiper-button-next swiper-button-white"></div>
+        </div>
+
+        <!-- Thumbnail navigation -->
+        <div class="swiper-container nav-slider loading">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <figure class="slide-bgimg"
+                        style="background-image:url(https://tleit.by/templates/tleit/images/sliders/3.jpg)">
+                        <img src="https://tleit.by/templates/tleit/images/sliders/3.jpg" class="entity-img" />
+                    </figure>
+                    <div class="content">
+                        <p class="title">Обрезинивание валов</p>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <figure class="slide-bgimg"
+                        style="background-image:url(http://tleit.by/uploads/posts/shtamp5_2.jpg)">
+                        <img src="http://tleit.by/uploads/posts/shtamp5_2.jpg" class="entity-img" />
+                    </figure>
+                    <div class="content">
+                        <p class="title">Штампы панель</p>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <figure class="slide-bgimg"
+                        style="background-image:url(http://tleit.by/uploads/posts/2019-04/1554796860_sertifikaty1.jpg)">
+                        <img src="http://tleit.by/uploads/posts/2019-04/1554796860_sertifikaty1.jpg"
+                            class="entity-img" />
+                    </figure>
+                    <div class="content">
+                        <p class="title">Наши сертификаты</p>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <figure class="slide-bgimg" style="background-image:url(http://tleit.by/uploads/kovrikigif.gif)">
+                        <img src="http://tleit.by/uploads/kovrikigif.gif" class="entity-img" />
+                    </figure>
+                    <div class="content">
+                        <p class="title">Коврики и плиты</p>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <figure class="slide-bgimg"
+                        style="background-image:url(https://drive.google.com/uc?export=view&id=0B_koKn2rKOkLNXBIcEdOUFVIWmM)">
+                        <img src="http://tleit.by/uploads/posts/shtamp6.jpg" class="entity-img" />
+                    </figure>
+                    <div class="content">
+                        <p class="title">Bernadette Newman</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/js/swiper.min.js'></script>
+
+
+
+    <script>
+        // Params
+        var mainSliderSelector = '.main-slider',
+            navSliderSelector = '.nav-slider',
+            interleaveOffset = 0.5;
+
+        // Main Slider
+        var mainSliderOptions = {
+            loop: true,
+            speed: 1000,
+            autoplay: {
+                delay: 3000
+            },
+            loopAdditionalSlides: 10,
+            grabCursor: true,
+            watchSlidesProgress: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            on: {
+                init: function () {
+                    this.autoplay.stop();
+                },
+                imagesReady: function () {
+                    this.el.classList.remove('loading');
+                    this.autoplay.start();
+                },
+                slideChangeTransitionEnd: function () {
+                    var swiper = this,
+                        captions = swiper.el.querySelectorAll('.caption');
+                    for (var i = 0; i < captions.length; ++i) {
+                        captions[i].classList.remove('show');
+                    }
+                    swiper.slides[swiper.activeIndex].querySelector('.caption').classList.add('show');
+                },
+                progress: function () {
+                    var swiper = this;
+                    for (var i = 0; i < swiper.slides.length; i++) {
+                        var slideProgress = swiper.slides[i].progress,
+                            innerOffset = swiper.width * interleaveOffset,
+                            innerTranslate = slideProgress * innerOffset;
+                        swiper.slides[i].querySelector(".slide-bgimg").style.transform =
+                            "translate3d(" + innerTranslate + "px, 0, 0)";
+                    }
+                },
+                touchStart: function () {
+                    var swiper = this;
+                    for (var i = 0; i < swiper.slides.length; i++) {
+                        swiper.slides[i].style.transition = "";
+                    }
+                },
+                setTransition: function (speed) {
+                    var swiper = this;
+                    for (var i = 0; i < swiper.slides.length; i++) {
+                        swiper.slides[i].style.transition = speed + "ms";
+                        swiper.slides[i].querySelector(".slide-bgimg").style.transition =
+                            speed + "ms";
+                    }
+                }
+            }
+        };
+        var mainSlider = new Swiper(mainSliderSelector, mainSliderOptions);
+
+        // Navigation Slider
+        var navSliderOptions = {
+            loop: true,
+            loopAdditionalSlides: 10,
+            speed: 1000,
+            spaceBetween: 5,
+            slidesPerView: 5,
+            centeredSlides: true,
+            touchRatio: 0.2,
+            slideToClickedSlide: true,
+            direction: 'vertical',
+            on: {
+                imagesReady: function () {
+                    this.el.classList.remove('loading');
+                },
+                click: function () {
+                    mainSlider.autoplay.stop();
+                }
+            }
+        };
+        var navSlider = new Swiper(navSliderSelector, navSliderOptions);
+
+        // Matching sliders
+        mainSlider.controller.control = navSlider;
+        navSlider.controller.control = mainSlider;
+    </script>
+
+
+
+
+</body>
+
+</html>

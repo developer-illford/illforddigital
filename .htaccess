@@ -4,6 +4,8 @@
     RewriteEngine On 
     RewriteBase /
 
+
+    
     #removing trailing slash
     RewriteCond %{REQUEST_FILENAME} !-d     
     RewriteRule ^(.*)/$ $1 [R=301,L]
@@ -19,7 +21,44 @@
 
     #index redirect 
     RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html\ HTTP/ 
-    RewriteRule ^index\.html$ http://illforddigital.com/ [R=301,L]
+    RewriteRule ^index\.html$ https://illforddigital.com/ [R=301,L]
     RewriteCond %{THE_REQUEST} \.html 
     RewriteRule ^(.*)\.html$ /$1 [R=301,L] 
+
+    #non-www. http to www. https
+RewriteCond %{ENV:HTTPS} !on
+RewriteCond %{HTTP_HOST} ^(www\.)?yourdomain\.com$
+RewriteRule (.*) https://www.yourdomain.com/$1 [R=301,L]
+
+#non-www. https to www. https
+RewriteCond %{ENV:HTTPS} on
+RewriteCond %{HTTP_HOST} ^yourdomain\.com$
+RewriteRule (.*) https://www.yourdomain.com/$1 [R=301,L]
+
+
+
+# Ensure all URLs have a trailing slash.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^[^.]*?[^/.]$ %{REQUEST_URI}/ [L,R=302]
+
+# Remove all .php extensions without interfering with .js or .css.
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^.]+?)/?$ $1.php [L]
+
+# Remove index from url.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^.]+?)/?$ index.php?$1 [L,QSA]
+
+
+
+ErrorDocument 404 /404.html
+
 </IfModule> 
+
+Redirect 301 /privacy-Policy https://illforddigital.com/privacy-policy
+Redirect 301 /services/about  https://illforddigital.com/about
+Redirect 301 /services/index https://illforddigital.com/
+Redirect 301 /services/terms-and-conditions  https://illforddigital.com/terms-and-conditions
+
+Access-Control-Allow-Origin
