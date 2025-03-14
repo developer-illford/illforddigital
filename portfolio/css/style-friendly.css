@@ -5755,11 +5755,11 @@ footer
     -ms-flex-align: start;
     align-items: flex-start;
     height: auto;
-    padding: 90px 0;
+    padding: 10px 0;
   }
 
   .mil-footer-menu-frame .mil-footer-menu {
-    margin-bottom: 60px;
+    margin-bottom: 10px;
   }
 }
 
